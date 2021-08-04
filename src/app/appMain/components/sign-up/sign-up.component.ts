@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { WindowService } from "../../services/window.service";
+import { AuthService } from "../../services/auth.service";
 import * as firebase from "firebase";
 import { Router } from "@angular/router";
 @Component({
@@ -14,7 +15,11 @@ export class SignUpComponent implements OnInit {
   verificationCode: string;
 
   user: any;
-  constructor(private win: WindowService, private router: Router) {}
+  constructor(
+    private win: WindowService,
+    private router: Router,
+    public authService: AuthService
+  ) {}
   loginform = true;
   recoverform = false;
 
@@ -39,15 +44,11 @@ export class SignUpComponent implements OnInit {
       .catch((error) => console.log(error));
   }
 
-  verifyLoginCode() {
-    this.router.navigateByUrl("/update-profile");
-    this.windowRef.confirmationResult
-      .confirm(this.verificationCode)
-      .then((result) => {
-        this.user = result.user;
-      })
-      .catch((error) => console.log(error, "Incorrect code entered?"));
-    if (this.user) {
-    }
+  submit() {
+    this.authService.SignUpWithMobile(
+      this.windowRef,
+      this.verificationCode,
+      "/update-profile"
+    );
   }
 }

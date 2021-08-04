@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-md-12">
+    <!--- Complete Table -->
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-0"><span class="lstick"></span>Manage</h4>
+
+        <div class="d-md-flex mt-3">
+          <input
+            type="text"
+            placeholder="Search"
+            class="form-control w-auto"
+            [(ngModel)]="csearchTerm"
+          />
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped no-wrap border mt-4">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th sortable="Name" (sort)="onSort($event)">Name</th>
+                <th sortable="UserName" (sort)="onSort($event)">User Name</th>
+                <th sortable="Email" (sort)="onSort($event)">Email</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let client of cfilterClient
+                    | slice
+                      : (cpage - 1) * cpageSize
+                      : (cpage - 1) * cpageSize + cpageSize
+                "
+              >
+                <td>{{ client.Id }}</td>
+                <td>
+                  <img
+                    [src]="client.imagePath"
+                    class="mr-2 rounded-circle"
+                    style="width: 30px"
+                  />
+                  <ngb-highlight
+                    [result]="client.Name"
+                    [term]="csearchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="client.UserName"
+                    [term]="csearchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="client.Email"
+                    [term]="csearchTerm"
+                  ></ngb-highlight>
+                </td>
+
+                <td>
+                  <i
+                    class="ti-pencil text-info m-r-10 pointer"
+                    (click)="openModal(editModal, client)"
+                  ></i>
+                  <i
+                    class="ti-trash text-danger pointer"
+                    (click)="delete(client.Id)"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex justify-content-between p-2">
+            <ngb-pagination
+              [(page)]="cpage"
+              [pageSize]="cpageSize"
+              [collectionSize]="totalLengthOfCollection"
+            ></ngb-pagination>
+            <select
+              class="custom-select"
+              style="width: auto"
+              [(ngModel)]="cpageSize"
+            >
+              <option [ngValue]="2">2 items per page</option>
+              <option [ngValue]="4">4 items per page</option>
+              <option [ngValue]="6">6 items per page</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  >
+</div>

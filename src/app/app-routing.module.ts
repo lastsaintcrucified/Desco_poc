@@ -5,12 +5,14 @@ import { SignInComponent } from "./appMain/components/sign-in/sign-in.component"
 import { SignUpComponent } from "./appMain/components/sign-up/sign-up.component";
 import { UpdateProfileComponent } from "./appMain/components/update-profile/update-profile.component";
 import { UserDashboardComponent } from "./appMain/components/user-dashboard/user-dashboard.component";
+import { ListThingsComponent } from "./appMain/components/list-things/list-things.component";
 export const Approutes: Routes = [
   { path: "", redirectTo: "/sign-in", pathMatch: "full" },
   { path: "sign-in", component: SignInComponent },
   { path: "sign-up", component: SignUpComponent },
   { path: "update-profile", component: UpdateProfileComponent },
   { path: "user-dashboard", component: UserDashboardComponent },
+  { path: "list-things", component: ListThingsComponent },
   {
     path: "**",
     redirectTo: "/authentication/404",
