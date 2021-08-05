@@ -22,13 +22,13 @@
             <div class="col-4">
               <a href="javascript:void(0)" class="link">
                 <i class="icon-people m-r-10"></i>
-                254
+                {{ tenants }}
               </a>
             </div>
             <div class="col-4">
               <a href="javascript:void(0)" class="link">
                 <i class="icon-picture m-r-10"></i>
-                54
+                {{ meters }}
               </a>
             </div>
           </div>
@@ -38,20 +38,30 @@
         <hr />
       </div>
       <div class="card-body">
-        <small class="text-muted">Name </small>
-        <h6>{{ displayName }}</h6>
-        <small class="text-muted p-t-30 db">Blood group</small>
-        <h6>{{ blood }}</h6>
-        <small class="text-muted p-t-30 db">NID</small>
-        <h6>{{ nid }}</h6>
-        <small class="text-muted p-t-30 db">Blood Group</small>
-        <h6>A+</h6>
-        <small class="text-muted p-t-30 db">Date of birth</small>
-        <h6>{{ dob }}</h6>
-        <small class="text-muted p-t-30 db">Address</small>
-        <h6>{{ address }}</h6>
+        <small class="">Name:{{ displayName }} </small>
+        <h6></h6>
+        <small class=""><strong>User type</strong>:{{ status }} </small>
+        <h6></h6>
+        <small class=""><strong>Tenants:</strong> {{ tenants }}</small>
+        <h6></h6>
+        <small class=""><strong>Meters</strong>:{{ meters }} </small>
+        <h6></h6>
+        <small class=""><strong>Approved by</strong>:{{ apprvBy }} </small>
+        <h6></h6>
+        <small class=""
+          ><strong>Application status</strong>:{{ appStat }}
+        </small>
+        <h6></h6>
+        <small class="text-muted p-t-30 db">Blood group:{{ blood }}</small>
+        <h6></h6>
+        <small class="p-t-30 db">NID: {{ nid }}</small>
+        <h6></h6>
+        <small class="p-t-30 db">Date of birth: {{ dob }}</small>
+        <h6></h6>
+        <small class="p-t-30 db">Address:{{ address }}</small>
+        <h6></h6>
 
-        <small class="text-muted p-t-30 db">Social Profile</small>
+        <small class="p-t-30 db">Social Profile</small>
         <br />
       </div>
     </div>

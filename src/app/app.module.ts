@@ -45,10 +45,8 @@ import * as firebase from "firebase";
 import { SignUpComponent } from "./appMain/components/sign-up/sign-up.component";
 import { UpdateProfileComponent } from "./appMain/components/update-profile/update-profile.component";
 import { UserDashboardComponent } from "./appMain/components/user-dashboard/user-dashboard.component";
-import { ManageThingsComponent } from "./appMain/components/manage-things/manage-things.component";
-import { ListThingsComponent } from './appMain/components/list-things/list-things.component';
-import { SetThingsComponent } from './appMain/components/set-things/set-things.component';
-import { ToastComponent } from './appMain/components/toast/toast.component';
+import { ManageThingsComponent } from "./appMain/extras/manage-things/manage-things.component";
+import { ListItemComponent } from "./appMain/components/list-item/list-item.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -77,9 +75,7 @@ firebase.default.initializeApp(environment.firebase);
     UpdateProfileComponent,
     UserDashboardComponent,
     ManageThingsComponent,
-    ListThingsComponent,
-    SetThingsComponent,
-    ToastComponent,
+    ListItemComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

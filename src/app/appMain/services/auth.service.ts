@@ -22,10 +22,11 @@ export class AuthService {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
-        this.getUser(this.userData.uid);
-      } else {
-        this.storage.set("user", null);
+        this.getUser("IKLb6fxmIBBS21mRPCtu");
       }
+      // else {
+      //   this.storage.set("user", null);
+      // }
     });
   }
 
@@ -77,12 +78,14 @@ export class AuthService {
       })
       .catch((error) => console.log(error, "Incorrect code entered?"));
     if (this.userData) {
-      this.getUser(this.userData.uid);
+      this.getUser("IKLb6fxmIBBS21mRPCtu");
       this.router.navigate([url]);
     } else {
       this.storage.set("user", null);
     }
   }
+
+  // dummy id IKLb6fxmIBBS21mRPCtu
 
   // SignIn(email: string, password: string) {
   //   return this.afAuth.signInWithEmailAndPassword(email, password).then(
@@ -102,7 +105,20 @@ export class AuthService {
       this.router.navigate([""]);
     });
   }
-
+  getUserDoc(uid) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
+    userRef
+      .valueChanges()
+      .subscribe((user) => this.storage.set("approver", user));
+  }
+  getMeterDoc(uid) {
+    const meterRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `meters/${uid}`
+    );
+    return meterRef
+      .valueChanges()
+      .subscribe((meter) => this.storage.set("meter", meter));
+  }
   getUser(uid) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
     return userRef
@@ -134,6 +150,7 @@ export class AuthService {
       merge: true,
     });
   }
+
   updateUserData(loggedInUser, updatedData) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${loggedInUser.uid}`
@@ -162,6 +179,24 @@ export class AuthService {
     const user = this.storage.get("user");
     return user !== null && user.uid ? true : false;
   }
+
+  // setMeterData() {
+  //   const meterRef: AngularFirestoreDocument<any> =
+  //     this.afs.doc(`meters/meterid3`);
+  //   const meterData: Meter = {
+  //     mid: "meterid2",
+  //     type: "1",
+  //     status: "2",
+  //     location: "jamuna",
+  //     bill: "2323",
+  //     owner: "IKLb6fxmIBBS21mRPCtu",
+  //   };
+  //   return meterRef
+  //     .set(meterData, {
+  //       merge: true,
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 }
 
 export interface User {
@@ -172,4 +207,12 @@ export interface User {
   dob: string;
   address: string;
   photoUrl: string;
+}
+export interface Meter {
+  mid: string;
+  type: string;
+  status: string;
+  location: string;
+  bill: string;
+  owner: string;
 }
