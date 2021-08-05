@@ -111,9 +111,15 @@ export class AuthService {
       .valueChanges()
       .subscribe((user) => this.storage.set("approver", user));
   }
-  getMeterDoc(uid) {
+  getMeterCollection() {
+    const meterRef: AngularFirestoreDocument<any> = this.afs.doc(`meters`);
+    return meterRef
+      .valueChanges()
+      .subscribe((meter) => this.storage.set("meter", meter));
+  }
+  getMeterDoc(mid) {
     const meterRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `meters/${uid}`
+      `meters/${mid}`
     );
     return meterRef
       .valueChanges()
