@@ -22,7 +22,7 @@ export class AuthService {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
-        this.storage.set("user", this.userData);
+        this.getUser(this.userData.uid);
       } else {
         this.storage.set("user", null);
       }
@@ -38,7 +38,7 @@ export class AuthService {
         const user = { ...result.user };
         user.displayName = name;
         user.photoURL = photo;
-        this.SetUserData(user);
+        this.SetUserDataForSignUp(user);
       },
       (error) => {
         alert(error.message);
@@ -55,7 +55,7 @@ export class AuthService {
       .signInWithCredential(credential)
       .then(
         (result) => {
-          this.SetUserData(result.user);
+          this.SetUserDataForSignUp(result.user);
           this.userData = result.user;
         },
         (error) => {
@@ -77,7 +77,7 @@ export class AuthService {
       })
       .catch((error) => console.log(error, "Incorrect code entered?"));
     if (this.userData) {
-      this.storage.set("user", this.userData);
+      this.getUser(this.userData.uid);
       this.router.navigate([url]);
     } else {
       this.storage.set("user", null);
@@ -103,7 +103,20 @@ export class AuthService {
     });
   }
 
-  SetUserData(user: any) {
+  getUser(uid) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
+    return userRef
+      .valueChanges()
+      .subscribe((user) => this.storage.set("user", user));
+  }
+  updateLocalStorageData(uid) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
+    return userRef.valueChanges().subscribe((user) => {
+      this.storage.clear();
+      this.storage.set("user", user);
+    });
+  }
+  SetUserDataForSignUp(user: any) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
@@ -115,10 +128,34 @@ export class AuthService {
       blood: "",
       dob: "",
       address: "",
+      photoUrl: "",
     };
     return userRef.set(userData, {
       merge: true,
     });
+  }
+  updateUserData(loggedInUser, updatedData) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${loggedInUser.uid}`
+    );
+    const userData: User = {
+      uid: loggedInUser.uid,
+      displayName: updatedData.displayName,
+      nid: updatedData.nid,
+      blood: updatedData.blood,
+      dob: updatedData.dob,
+      address: updatedData.address,
+      photoUrl: updatedData.photoUrl,
+    };
+    return userRef
+      .set(userData, {
+        merge: true,
+      })
+      .then(() => {
+        this.updateLocalStorageData(this.storage.get("user").uid);
+        this.router.navigate(["/user-dashboard"]);
+        alert("Success!");
+      });
   }
 
   get isLoggedIn(): boolean {
@@ -134,4 +171,5 @@ export interface User {
   blood: string;
   dob: string;
   address: string;
+  photoUrl: string;
 }

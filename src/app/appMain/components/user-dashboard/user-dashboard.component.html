@@ -1,6 +1,13 @@
 <div class="row">
   <!-- Column -->
   <div class="col-lg-4 col-xlg-3 col-md-5">
+    <div class="row">
+      <div class="col-12 m-t-10 m-l-10">
+        <button class="btn btn-sm btn-danger float-left" (click)="signOut()">
+          Sign Out
+        </button>
+      </div>
+    </div>
     <div class="card">
       <div class="card-body">
         <div class="m-t-30 text-center">
@@ -9,8 +16,8 @@
             class="rounded-circle"
             width="150"
           />
-          <h4 class="card-title m-t-10">Hanna Gover</h4>
-          <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
+          <h4 class="card-title m-t-10">{{ displayName }}</h4>
+          <h6 class="card-subtitle">{{ displayName }}</h6>
           <div class="row text-center justify-content-md-center">
             <div class="col-4">
               <a href="javascript:void(0)" class="link">
@@ -32,17 +39,17 @@
       </div>
       <div class="card-body">
         <small class="text-muted">Name </small>
-        <h6>Abu fulan</h6>
-        <small class="text-muted p-t-30 db">Phone</small>
-        <h6>+91 654 784 547</h6>
+        <h6>{{ displayName }}</h6>
+        <small class="text-muted p-t-30 db">Blood group</small>
+        <h6>{{ blood }}</h6>
         <small class="text-muted p-t-30 db">NID</small>
-        <h6>123445676554</h6>
+        <h6>{{ nid }}</h6>
         <small class="text-muted p-t-30 db">Blood Group</small>
         <h6>A+</h6>
         <small class="text-muted p-t-30 db">Date of birth</small>
-        <h6>71 Pilgrim Avenue Chevy Chase, MD 20815</h6>
+        <h6>{{ dob }}</h6>
         <small class="text-muted p-t-30 db">Address</small>
-        <h6>71 Pilgrim Avenue Chevy Chase, MD 20815</h6>
+        <h6>{{ address }}</h6>
 
         <small class="text-muted p-t-30 db">Social Profile</small>
         <br />

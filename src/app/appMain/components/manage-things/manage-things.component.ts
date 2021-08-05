@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-
 @Component({
   selector: "app-manage-things",
   templateUrl: "./manage-things.component.html",

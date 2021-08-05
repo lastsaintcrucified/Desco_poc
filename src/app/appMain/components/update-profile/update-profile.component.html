@@ -14,6 +14,8 @@
                   <input
                     type="text"
                     id="firstName"
+                    name="firstName"
+                    [(ngModel)]="firstName"
                     class="form-control"
                     placeholder="John doe"
                   />
@@ -26,6 +28,8 @@
                   <input
                     type="text"
                     id="lastName"
+                    name="lastName"
+                    [(ngModel)]="lastName"
                     class="form-control form-control-danger"
                     placeholder="12n"
                   />
@@ -41,6 +45,8 @@
                   <input
                     type="text"
                     id="bloodGroup"
+                    [(ngModel)]="blood"
+                    name="blood"
                     class="form-control form-control-danger"
                     placeholder="12n"
                   />
@@ -50,7 +56,12 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Date of Birth</label>
-                  <input type="date" class="form-control" />
+                  <input
+                    type="date"
+                    [(ngModel)]="dob"
+                    name="dob"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <!--/span-->
@@ -63,6 +74,8 @@
                   <input
                     type="text"
                     id="nid"
+                    [(ngModel)]="nid"
+                    name="nid"
                     class="form-control form-control-danger"
                     placeholder="nid number "
                   />
@@ -80,6 +93,8 @@
                     <div class="custom-file">
                       <input
                         type="file"
+                        name="photo"
+                        (change)="getPhotoUrl($event)"
                         class="custom-file-input"
                         id="inputGroupFile01"
                       />
@@ -101,7 +116,12 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Street</label>
-                  <input type="text" class="form-control" />
+                  <input
+                    type="text"
+                    name="addP1"
+                    [(ngModel)]="addP1"
+                    class="form-control"
+                  />
                 </div>
               </div>
             </div>
@@ -109,14 +129,24 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>City</label>
-                  <input type="text" class="form-control" />
+                  <input
+                    type="text"
+                    name="addP2"
+                    [(ngModel)]="addP2"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <!--/span-->
               <div class="col-md-6">
                 <div class="form-group">
                   <label>State</label>
-                  <input type="text" class="form-control" />
+                  <input
+                    type="text"
+                    name="addP3"
+                    [(ngModel)]="addP3"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <!--/span-->
@@ -126,7 +156,12 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Post Code</label>
-                  <input type="text" class="form-control" />
+                  <input
+                    type="text"
+                    name="addP4"
+                    [(ngModel)]="addP4"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <!--/span-->
@@ -136,7 +171,7 @@
           </div>
           <div class="form-actions">
             <div class="card-body">
-              <button type="submit" class="btn btn-success">
+              <button (click)="onClick()" type="submit" class="btn btn-success">
                 <i class="fa fa-check"></i> Save
               </button>
               <button type="button" class="btn btn-dark">Cancel</button>
