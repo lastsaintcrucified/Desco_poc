@@ -9,8 +9,9 @@ import { StorageService } from "../../services/storage.service";
 })
 export class ListItemComponent implements OnInit {
   meterIds: any;
-
+  meter: any;
   meters: any = [];
+
   constructor(
     public authService: AuthService,
     public storage: StorageService
@@ -19,7 +20,9 @@ export class ListItemComponent implements OnInit {
   ngOnInit(): void {
     this.meterIds = this.storage.get("user").meters;
     this.meterIds.map((mid) => {
-      this.meters.push(this.authService.getMeterDoc(mid));
+      this.authService
+        .getMeterDoc(mid)
+        .subscribe((itm) => this.meters.push(itm));
     });
 
     console.log(this.meters);
