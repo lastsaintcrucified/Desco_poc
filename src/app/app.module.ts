@@ -5,7 +5,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { Routes, RouterModule } from "@angular/router";
-
+import { NgxMaskModule, IConfig } from "ngx-mask";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 // import { AgmCoreModule } from '@agm/core';
 import { DataTablesModule } from "angular-datatables";
@@ -47,16 +47,16 @@ import { UpdateProfileComponent } from "./appMain/components/update-profile/upda
 import { UserDashboardComponent } from "./appMain/components/user-dashboard/user-dashboard.component";
 import { ManageThingsComponent } from "./appMain/extras/manage-things/manage-things.component";
 import { ListItemComponent } from "./appMain/components/list-item/list-item.component";
-import { ListSuperAdminComponent } from './appMain/components/list-super-admin/list-super-admin.component';
-import { ListAdminComponent } from './appMain/components/list-admin/list-admin.component';
-import { ListUsersComponent } from './appMain/components/list-users/list-users.component';
-import { ListLandlordsComponent } from './appMain/components/list-landlords/list-landlords.component';
-import { ListTenantsComponent } from './appMain/components/list-tenants/list-tenants.component';
+import { ListSuperAdminComponent } from "./appMain/components/list-super-admin/list-super-admin.component";
+import { ListAdminComponent } from "./appMain/components/list-admin/list-admin.component";
+import { ListUsersComponent } from "./appMain/components/list-users/list-users.component";
+import { ListLandlordsComponent } from "./appMain/components/list-landlords/list-landlords.component";
+import { ListTenantsComponent } from "./appMain/components/list-tenants/list-tenants.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
-
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelSpeed: 1,
@@ -108,6 +108,7 @@ firebase.default.initializeApp(environment.firebase);
     NgMultiSelectDropDownModule.forRoot(),
     // AgmCoreModule.forRoot({ apiKey: 'AIzaSyDoliAneRffQDyA7Ul9cDk3tLe7vaU4yP8' }),
     HttpClientModule,
+    NgxMaskModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

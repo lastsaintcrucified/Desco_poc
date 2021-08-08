@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
   sendLoginCode() {
     const appVerifier = this.windowRef.recaptchaVerifier;
 
-    const num = `+880${this.mobile}`;
+    const num = `+88001${this.mobile}`;
 
     firebase.default
       .auth()
