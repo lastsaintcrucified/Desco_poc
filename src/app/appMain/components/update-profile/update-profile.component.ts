@@ -18,6 +18,7 @@ export class UpdateProfileComponent implements OnInit {
   addP3: string;
   addP4: string;
   photoUrl: string;
+  email: string;
   user: any = this.storageService.get("user");
 
   constructor(
@@ -55,6 +56,7 @@ export class UpdateProfileComponent implements OnInit {
       this.addP2 &&
       this.addP3 &&
       this.addP4 &&
+      this.email &&
       this.photoUrl
     ) {
       const address = [this.addP1, this.addP2, this.addP3, this.addP4].join(
@@ -70,6 +72,7 @@ export class UpdateProfileComponent implements OnInit {
         dob: this.dob,
         address: address,
         photoUrl: this.photoUrl,
+        email: this.email,
       };
       this.authService.updateUserData(this.user, updatedData);
     } else {

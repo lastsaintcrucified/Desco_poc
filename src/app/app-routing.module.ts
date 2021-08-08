@@ -6,6 +6,13 @@ import { SignUpComponent } from "./appMain/components/sign-up/sign-up.component"
 import { UpdateProfileComponent } from "./appMain/components/update-profile/update-profile.component";
 import { UserDashboardComponent } from "./appMain/components/user-dashboard/user-dashboard.component";
 import { ListItemComponent } from "./appMain/components/list-item/list-item.component";
+import { ListUsersComponent } from "./appMain/components/list-users/list-users.component";
+import { ListLandlordsComponent } from "./appMain/components/list-landlords/list-landlords.component";
+import { ListTenantsComponent } from "./appMain/components/list-tenants/list-tenants.component";
+import { ListSuperAdminComponent } from "./appMain/components/list-super-admin/list-super-admin.component";
+import { ListAdminComponent } from "./appMain/components/list-admin/list-admin.component";
+
+import { AuthGuard } from "./appMain/components/guard/auth.guard";
 export const Approutes: Routes = [
   { path: "", redirectTo: "/sign-in", pathMatch: "full" },
   { path: "sign-in", component: SignInComponent },
@@ -13,6 +20,11 @@ export const Approutes: Routes = [
   { path: "update-profile", component: UpdateProfileComponent },
   { path: "user-dashboard", component: UserDashboardComponent },
   { path: "list-item", component: ListItemComponent },
+  { path: "list-users", component: ListUsersComponent },
+  { path: "list-landlords", component: ListLandlordsComponent },
+  { path: "list-tenants", component: ListTenantsComponent },
+  { path: "list-super-admin", component: ListSuperAdminComponent },
+  { path: "list-admin", component: ListAdminComponent },
   {
     path: "**",
     redirectTo: "/authentication/404",

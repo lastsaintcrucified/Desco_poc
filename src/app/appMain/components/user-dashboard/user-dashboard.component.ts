@@ -17,7 +17,7 @@ export class UserDashboardComponent implements OnInit {
   meters: string = this.user.meters.length;
   tenants: string = this.user.tenants.length;
   active = 1;
-  apprvBy: string;
+  apprvBy: string = this.user.approvedBy;
   appStat: string = this.user.applicationStatus;
 
   constructor(
@@ -25,10 +25,7 @@ export class UserDashboardComponent implements OnInit {
     public authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    this.authService.getUserDoc(this.user.approvedBy);
-    this.apprvBy = this.storage.get("approver").displayName;
-  }
+  ngOnInit(): void {}
   signOut() {
     this.authService.SignOut();
   }

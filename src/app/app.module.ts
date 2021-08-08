@@ -47,6 +47,11 @@ import { UpdateProfileComponent } from "./appMain/components/update-profile/upda
 import { UserDashboardComponent } from "./appMain/components/user-dashboard/user-dashboard.component";
 import { ManageThingsComponent } from "./appMain/extras/manage-things/manage-things.component";
 import { ListItemComponent } from "./appMain/components/list-item/list-item.component";
+import { ListSuperAdminComponent } from './appMain/components/list-super-admin/list-super-admin.component';
+import { ListAdminComponent } from './appMain/components/list-admin/list-admin.component';
+import { ListUsersComponent } from './appMain/components/list-users/list-users.component';
+import { ListLandlordsComponent } from './appMain/components/list-landlords/list-landlords.component';
+import { ListTenantsComponent } from './appMain/components/list-tenants/list-tenants.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -76,6 +81,11 @@ firebase.default.initializeApp(environment.firebase);
     UserDashboardComponent,
     ManageThingsComponent,
     ListItemComponent,
+    ListSuperAdminComponent,
+    ListAdminComponent,
+    ListUsersComponent,
+    ListLandlordsComponent,
+    ListTenantsComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

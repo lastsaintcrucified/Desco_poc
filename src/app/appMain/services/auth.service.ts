@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import {
   AngularFirestore,
+  AngularFirestoreCollection,
   AngularFirestoreDocument,
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
@@ -22,7 +23,7 @@ export class AuthService {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
-        this.getUser("IKLb6fxmIBBS21mRPCtu");
+        this.getUser(user.uid);
       }
       // else {
       //   this.storage.set("user", null);
@@ -78,7 +79,7 @@ export class AuthService {
       })
       .catch((error) => console.log(error, "Incorrect code entered?"));
     if (this.userData) {
-      this.getUser("IKLb6fxmIBBS21mRPCtu");
+      this.getUser(this.userData.uid);
       this.router.navigate([url]);
     } else {
       this.storage.set("user", null);
@@ -105,17 +106,26 @@ export class AuthService {
       this.router.navigate([""]);
     });
   }
+
+  //GET DATA
   getUserDoc(uid) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
     userRef
       .valueChanges()
       .subscribe((user) => this.storage.set("approver", user));
   }
-  getMeterCollection() {
-    const meterRef: AngularFirestoreDocument<any> = this.afs.doc(`meters`);
-    return meterRef
-      .valueChanges()
-      .subscribe((meter) => this.storage.set("meter", meter));
+  getCollection(collectionName) {
+    const meterRef: AngularFirestoreCollection<any> = this.afs.collection(
+      `${collectionName}`
+    );
+    return meterRef.valueChanges();
+  }
+  getCollectionSpecific(collectionName, propName, prop) {
+    const meterRef: AngularFirestoreCollection<any> = this.afs.collection(
+      `${collectionName}`,
+      (ref) => ref.where(propName, "==", prop)
+    );
+    return meterRef.valueChanges();
   }
   getMeterDoc(mid) {
     const meterRef: AngularFirestoreDocument<any> = this.afs.doc(
@@ -129,6 +139,8 @@ export class AuthService {
       .valueChanges()
       .subscribe((user) => this.storage.set("user", user));
   }
+
+  //UPDATE and SET DATA
   updateLocalStorageData(uid) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
     return userRef.valueChanges().subscribe((user) => {
@@ -149,12 +161,24 @@ export class AuthService {
       dob: "",
       address: "",
       photoUrl: "",
+      approvedBy: "",
+      approvedOn: "",
+      meters: [],
+      tenants: [],
+      status: "super_admin",
+      email: "",
+      applicationStatus: "approved",
     };
     return userRef.set(userData, {
       merge: true,
     });
   }
-
+  setData(id, newData, collectionName) {
+    const dataRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `${collectionName}/${id}`
+    );
+    return dataRef.set(newData, { merge: true });
+  }
   updateUserData(loggedInUser, updatedData) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${loggedInUser.uid}`
@@ -167,6 +191,13 @@ export class AuthService {
       dob: updatedData.dob,
       address: updatedData.address,
       photoUrl: updatedData.photoUrl,
+      approvedBy: "",
+      approvedOn: "",
+      meters: [],
+      tenants: [],
+      status: "super_admin",
+      email: updatedData.email,
+      applicationStatus: "approved",
     };
     return userRef
       .set(userData, {
@@ -182,6 +213,32 @@ export class AuthService {
   get isLoggedIn(): boolean {
     const user = this.storage.get("user");
     return user !== null && user.uid ? true : false;
+  }
+
+  setDummyUserData() {
+    const userRef: AngularFirestoreDocument<any> =
+      this.afs.doc(`users/admin14`);
+    const userData: User = {
+      uid: "admin14",
+      displayName: "admin13",
+      nid: "4444444",
+      blood: "b+",
+      dob: "1-33-34",
+      address: "satkhira",
+      photoUrl: "fgf.jpg",
+      meters: ["meterid2", "meterid3"],
+      status: "admin",
+      email: "admin4@gmail.com",
+      tenants: [],
+      applicationStatus: "approved",
+      approvedBy: "IKLb6fxmIBBS21mRPCtu",
+      approvedOn: "12-23-23",
+    };
+    return userRef
+      .set(userData, {
+        merge: true,
+      })
+      .catch((err) => console.log(err));
   }
 
   // setMeterData() {
@@ -211,6 +268,13 @@ export interface User {
   dob: string;
   address: string;
   photoUrl: string;
+  meters: any;
+  status: string;
+  email: string;
+  tenants: any;
+  applicationStatus: string;
+  approvedBy: string;
+  approvedOn: string;
 }
 export interface Meter {
   mid: string;

@@ -17,43 +17,49 @@
           <table class="table v-middle product-overview" id="zero_config">
             <thead>
               <tr>
-                <th>Meter Id</th>
                 <th>Status</th>
-                <th>Owner</th>
-                <th>Type</th>
-                <th>Location</th>
-                <th>Bill</th>
+                <th>User id</th>
+                <th>Name</th>
+                <th>App status</th>
+                <th>Approved by</th>
+                <th>Aproved on</th>
+                <th>No of meters</th>
+                <th>No of tenants</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let meter of meters">
-                <td>{{ meter.mid }}</td>
-                <td>{{ meter.status }}</td>
+              <tr *ngFor="let user of users">
+                <td>{{ user.status }}</td>
+                <td>{{ user.uid }}</td>
 
-                <td>{{ meter.owner }}</td>
-                <td>{{ meter.type }}</td>
-                <td>{{ meter.location }}</td>
-                <td>{{ meter.bill }}</td>
+                <td>{{ user.displayName }}</td>
+                <td>{{ user.applicationStatus }}</td>
+                <td>{{ user.approvedBy }}</td>
+                <td>{{ user.approvedOn }}</td>
+                <td>{{ user.meters.length }}</td>
+                <td>
+                  {{ user.tenants.length }}
+                </td>
 
                 <td>
                   <a
-                    *ngIf="meter.status == 1"
-                    (click)="onStatusToggle(meter.mid, 3)"
+                    *ngIf="user.applicationStatus == 'approved'"
+                    (click)="onStatusToggle(user.uid, 'pending')"
                     class="text-inverse p-r-10"
                     data-toggle="tooltip"
                     title="Edit"
                   >
-                    <i class="ti-close"></i> <span>Deactivate</span>
+                    <i class="ti-close"></i><span>Deactivate</span>
                   </a>
                   <a
-                    *ngIf="meter.status == 3"
-                    (click)="onStatusToggle(meter.mid, 1)"
+                    *ngIf="user.applicationStatus == 'pending'"
+                    (click)="onStatusToggle(user.uid, 'approved')"
                     class="text-inverse p-r-10"
                     data-toggle="tooltip"
                     title="Edit"
                   >
-                    <i class="ti-check"></i> <span>Activate</span>
+                    <i class="ti-check"></i><span>Activate</span>
                   </a>
                 </td>
               </tr>
