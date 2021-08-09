@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
-import { Meter } from "../../services/auth.service";
 import { StorageService } from "../../services/storage.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 @Component({
@@ -22,6 +21,7 @@ export class ListItemComponent implements OnInit {
   mLocation: string;
   mBill: string;
   mType: string;
+  mBillStatus: string;
   open2(content2: string, meter: any) {
     this.mMid = meter.mid;
     this.mStatus = meter.status;
@@ -29,7 +29,7 @@ export class ListItemComponent implements OnInit {
     this.mBill = meter.bill;
     this.mLocation = meter.location;
     this.mType = meter.type;
-
+    this.mBillStatus = meter.billStatus;
     this.modalService
       .open(content2, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
@@ -49,18 +49,23 @@ export class ListItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.meterIds = this.storage.get("user").meters;
+    console.log("meterIds->", this.meterIds);
     this.meterIds.map((mid) => {
       this.authService.getMeterDoc(mid).subscribe((itm) => {
-        let itemIndex = this.meters.findIndex((item) => item.mid == itm.mid);
-        this.meters[itemIndex] = itm;
-        if (itemIndex < 0) {
-          this.meters.push(itm);
+        if (itm) {
+          let itemIndex = this.meters.findIndex((item) => item.mid == itm.mid);
+          itemIndex >= 0 ? (this.meters[itemIndex] = itm) : null;
+          console.log(itemIndex);
+
+          if (itemIndex < 0) {
+            this.meters.push(itm);
+          }
         }
       });
     });
-
-    console.log(this.meters);
+    this.meters = [...this.meters];
   }
+
   onStatusToggle(id, num) {
     const data = {
       status: `${num}`,

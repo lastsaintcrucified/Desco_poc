@@ -14,7 +14,7 @@ import { ListAdminComponent } from "./appMain/components/list-admin/list-admin.c
 
 import { AuthGuard } from "./appMain/components/guard/auth.guard";
 export const Approutes: Routes = [
-  { path: "", redirectTo: "/sign-in", pathMatch: "full" },
+  { path: "", redirectTo: "/sign-up", pathMatch: "full" },
   { path: "sign-in", component: SignInComponent },
   { path: "sign-up", component: SignUpComponent },
   { path: "update-profile", component: UpdateProfileComponent },

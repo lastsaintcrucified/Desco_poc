@@ -43,7 +43,7 @@
                   let user of users
                     | slice: (page - 1) * pageSize:page * pageSize
                 "
-                (click)="open2(content2, user)"
+                (dblclick)="open2(content2, user)"
               >
                 <td>{{ user.status }}</td>
                 <td>{{ user.uid }}</td>

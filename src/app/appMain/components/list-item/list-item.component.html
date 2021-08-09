@@ -32,16 +32,18 @@
                 <th>Type</th>
                 <th>Location</th>
                 <th>Bill</th>
+                <th>Bill status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody class="border border-primary">
               <tr
                 *ngFor="
-                  let meter of meters
+                  let meter of meters;
+                  trackBy: trackByFn
                     | slice: (page - 1) * page - 1:page * pageSize
                 "
-                (click)="open2(content2, meter)"
+                (dblclick)="open2(content2, meter)"
               >
                 <td>{{ meter.mid }}</td>
                 <td>{{ meter.status }}</td>
@@ -50,7 +52,7 @@
                 <td>{{ meter.type }}</td>
                 <td>{{ meter.location }}</td>
                 <td>{{ meter.bill }}</td>
-
+                <td>{{ meter.billStatus }}</td>
                 <td>
                   <a
                     *ngIf="meter.status == 1"
@@ -119,6 +121,10 @@
         <li class="list-group-item">
           Bill:
           <strong class="font-weight-bold">{{ mBill }}</strong>
+        </li>
+        <li class="list-group-item">
+          Bill status:
+          <strong class="font-weight-bold">{{ mBillStatus }}</strong>
         </li>
         <li class="list-group-item">
           Location: <strong class="font-weight-bold"> {{ mLocation }}</strong>
