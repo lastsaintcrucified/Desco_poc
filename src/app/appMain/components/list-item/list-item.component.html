@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12 m-t-10 m-l-20">
       <button
-        class="btn btn-sm btn-warning float-left"
+        class="btn btn-sm btn-outline-primary float-left"
         routerLink="/user-dashboard"
       >
         Back
@@ -10,12 +10,21 @@
     </div>
   </div>
   <!-- Column -->
-  <div class="col-lg-12">
+  <div
+    class="col-lg-12 d-flex justify-content-center"
+    *ngIf="meters.length == 0"
+  >
+    <h3>No meters found for this user</h3>
+  </div>
+  <div class="col-lg-12" *ngIf="meters.length > 0">
     <div class="card">
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table v-middle product-overview" id="zero_config">
-            <thead>
+          <table
+            class="table v-middle product-overview table-hover"
+            id="zero_config"
+          >
+            <thead class="bg-primary text-white">
               <tr>
                 <th>Meter Id</th>
                 <th>Status</th>
@@ -26,8 +35,14 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let meter of meters">
+            <tbody class="border border-primary">
+              <tr
+                *ngFor="
+                  let meter of meters
+                    | slice: (page - 1) * page - 1:page * pageSize
+                "
+                (click)="open2(content2, meter)"
+              >
                 <td>{{ meter.mid }}</td>
                 <td>{{ meter.status }}</td>
 
@@ -62,6 +77,81 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-12 m-t-10 m-l-20">
+        <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="meters.length"
+        ></ngb-pagination>
+      </div>
+    </div>
   </div>
   <!-- Column -->
+  <ng-template #content2 let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title font-weight-bold">{{ mDisplayname }}</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ul class="list-group">
+        <li class="list-group-item">
+          Id: <strong class="font-weight-bold">{{ mMid }}</strong>
+        </li>
+        <li class="list-group-item">
+          Status: <strong class="font-weight-bold">{{ mStatus }}</strong>
+        </li>
+        <li class="list-group-item">
+          Type:
+          <strong class="font-weight-bold">{{ mType }}</strong>
+        </li>
+        <li class="list-group-item">
+          Owner Id:
+          <strong class="font-weight-bold">{{ mOwner }}</strong>
+        </li>
+        <li class="list-group-item">
+          Bill:
+          <strong class="font-weight-bold">{{ mBill }}</strong>
+        </li>
+        <li class="list-group-item">
+          Location: <strong class="font-weight-bold"> {{ mLocation }}</strong>
+        </li>
+
+        <li class="list-group-item">
+          <button
+            *ngIf="mStatus == 3"
+            (click)="onStatusToggle(mMid, 1)"
+            type="button"
+            class="btn btn-success"
+          >
+            Activate
+          </button>
+          <button
+            *ngIf="mStatus == 1"
+            (click)="onStatusToggle(mMid, 3)"
+            type="button"
+            class="btn btn-danger"
+          >
+            Deactivate
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-inverse"
+        (click)="modal.dismiss('Cross click')"
+      >
+        Close
+      </button>
+    </div>
+  </ng-template>
 </div>

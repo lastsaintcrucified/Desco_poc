@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12 m-t-10 m-l-20">
       <button
-        class="btn btn-sm btn-warning float-left"
+        class="btn btn-sm btn-outline-primary float-left"
         routerLink="/user-dashboard"
       >
         Back
@@ -10,12 +10,21 @@
     </div>
   </div>
   <!-- Column -->
-  <div class="col-lg-12">
+  <div
+    class="col-lg-12 d-flex justify-content-center"
+    *ngIf="users.length == 0"
+  >
+    <h3>No tenants found for this user</h3>
+  </div>
+  <div class="col-lg-12" *ngIf="users.length > 0">
     <div class="card">
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table v-middle product-overview" id="zero_config">
-            <thead>
+          <table
+            class="table v-middle product-overview table-hover"
+            id="zero_config"
+          >
+            <thead class="bg-primary text-white">
               <tr>
                 <th>Status</th>
                 <th>User id</th>
@@ -28,8 +37,14 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let user of users">
+            <tbody class="border border-primary">
+              <tr
+                *ngFor="
+                  let user of users
+                    | slice: (page - 1) * pageSize:page * pageSize
+                "
+                (click)="open2(content2, user)"
+              >
                 <td>{{ user.status }}</td>
                 <td>{{ user.uid }}</td>
 
@@ -68,6 +83,87 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-12 m-t-10 m-l-20">
+        <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="users.length"
+        ></ngb-pagination>
+      </div>
+    </div>
   </div>
   <!-- Column -->
+  <ng-template #content2 let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title font-weight-bold">{{ mDisplayname }}</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ul class="list-group">
+        <li class="list-group-item">
+          Name: <strong class="font-weight-bold">{{ mDisplayname }}</strong>
+        </li>
+        <li class="list-group-item">
+          Id: <strong class="font-weight-bold">{{ mUid }}</strong>
+        </li>
+        <li class="list-group-item">
+          User type: <strong class="font-weight-bold">{{ mStatus }}</strong>
+        </li>
+        <li class="list-group-item">
+          Application status:
+          <strong class="font-weight-bold">{{ mApplicationStatus }}</strong>
+        </li>
+        <li class="list-group-item">
+          Approved by:
+          <strong class="font-weight-bold">{{ mApprovedBy }}</strong>
+        </li>
+        <li class="list-group-item">
+          Approved on:
+          <strong class="font-weight-bold">{{ mApprovedOn }}</strong>
+        </li>
+        <li class="list-group-item">
+          Meters: <strong class="font-weight-bold"> {{ mMetersNumber }}</strong>
+        </li>
+        <li class="list-group-item">
+          Tenants:
+          <strong class="font-weight-bold">{{ mTenantsNumber }}</strong>
+        </li>
+        <li class="list-group-item">
+          <button
+            *ngIf="mApplicationStatus == 'pending'"
+            type="button"
+            class="btn btn-success"
+            (click)="onStatusToggle(mUid, 'approved')"
+          >
+            Activate
+          </button>
+          <button
+            *ngIf="mApplicationStatus == 'approved'"
+            type="button"
+            class="btn btn-danger"
+            (click)="onStatusToggle(mUid, 'pending')"
+          >
+            Deactivate
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-inverse"
+        (click)="modal.dismiss('Cross click')"
+      >
+        Close
+      </button>
+    </div>
+  </ng-template>
 </div>

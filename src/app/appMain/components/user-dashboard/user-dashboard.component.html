@@ -3,7 +3,10 @@
   <div class="col-lg-4 col-xlg-3 col-md-5">
     <div class="row">
       <div class="col-12 m-t-10 m-l-10">
-        <button class="btn btn-sm btn-danger float-left" (click)="signOut()">
+        <button
+          class="btn btn-sm btn-outline-danger float-left"
+          (click)="signOut()"
+        >
           Sign Out
         </button>
       </div>
@@ -38,30 +41,59 @@
         <hr />
       </div>
       <div class="card-body">
-        <small class="">Name:{{ displayName }} </small>
+        <small class="d-flex justify-content-center"
+          ><strong>Name</strong> :{{ displayName }}
+        </small>
         <h6></h6>
-        <small class=""><strong>User type</strong>:{{ status }} </small>
+        <small class="d-flex justify-content-center"
+          ><strong>User type</strong>:{{ status }}
+        </small>
         <h6></h6>
-        <small class=""><strong>Tenants:</strong> {{ tenants }}</small>
+        <small class="d-flex justify-content-center"
+          ><strong>User Id</strong> :{{ uid }}
+        </small>
         <h6></h6>
-        <small class=""><strong>Meters</strong>:{{ meters }} </small>
+        <small class="d-flex justify-content-center"
+          ><strong>Tenants:</strong> {{ tenants }}</small
+        >
         <h6></h6>
-        <small class=""><strong>Approved by</strong>: {{ apprvBy }} </small>
+        <small class="d-flex justify-content-center"
+          ><strong>Meters</strong>:{{ meters }}
+        </small>
         <h6></h6>
-        <small class=""
+        <small class="d-flex justify-content-center"
+          ><strong>Approved by</strong>: {{ apprvBy }}
+        </small>
+        <h6></h6>
+        <small class="d-flex justify-content-center"
           ><strong>Application status</strong>: {{ appStat }}
         </small>
         <h6></h6>
-        <small class="text-muted p-t-30 db">Blood group: {{ blood }}</small>
+        <small class="d-flex justify-content-center"
+          ><strong>Blood group</strong>: {{ blood }}</small
+        >
         <h6></h6>
-        <small class="p-t-30 db">NID: {{ nid }}</small>
+        <small class="d-flex justify-content-center"
+          ><strong>NID</strong>: {{ nid }}</small
+        >
         <h6></h6>
-        <small class="p-t-30 db">Date of birth: {{ dob }}</small>
+        <small class="d-flex justify-content-center"
+          ><strong>Date of birth</strong>: {{ dob }}</small
+        >
         <h6></h6>
-        <small class="p-t-30 db">Address: {{ address }}</small>
+        <small class="d-flex justify-content-center"
+          ><strong>Address</strong> {{ address }}</small
+        >
         <h6></h6>
 
         <br />
+        <div class="row">
+          <div class="col-12 m-t-10 m-l-10 d-flex justify-content-center">
+            <button class="btn btn-sm btn-info" routerLink="/update-profile">
+              update profile
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

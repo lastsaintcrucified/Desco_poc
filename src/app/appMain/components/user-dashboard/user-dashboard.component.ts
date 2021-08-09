@@ -8,6 +8,7 @@ import { StorageService } from "../../services/storage.service";
 })
 export class UserDashboardComponent implements OnInit {
   user = this.storage.get("user");
+  uid: string = this.user.uid;
   displayName: string = this.user.displayName;
   blood: string = this.user.blood;
   nid: string = this.user.nid;
