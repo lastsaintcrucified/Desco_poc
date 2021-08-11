@@ -108,12 +108,7 @@ export class AuthService {
   }
 
   //GET DATA
-  getUserDoc(uid) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
-    userRef
-      .valueChanges()
-      .subscribe((user) => this.storage.set("approver", user));
-  }
+
   getCollection(collectionName) {
     const meterRef: AngularFirestoreCollection<any> = this.afs.collection(
       `${collectionName}`
@@ -123,7 +118,7 @@ export class AuthService {
   getCollectionSpecific(collectionName, propName, prop) {
     const meterRef: AngularFirestoreCollection<any> = this.afs.collection(
       `${collectionName}`,
-      (ref) => ref.where(propName, "==", prop)
+      (ref) => ref.where(propName.toLowerCase(), "==", prop.toLowerCase())
     );
     return meterRef.valueChanges();
   }
@@ -217,18 +212,18 @@ export class AuthService {
 
   setDummyUserData() {
     const userRef: AngularFirestoreDocument<any> =
-      this.afs.doc(`users/admin14`);
+      this.afs.doc(`users/userid19`);
     const userData: User = {
-      uid: "admin14",
-      displayName: "admin13",
+      uid: "userid19",
+      displayName: "userid19",
       nid: "4444444",
       blood: "b+",
       dob: "1-33-34",
-      address: "satkhira",
+      address: "chittagong",
       photoUrl: "fgf.jpg",
-      meters: ["meterid2", "meterid3"],
-      status: "admin",
-      email: "admin4@gmail.com",
+      meters: ["meterid2"],
+      status: "tenant",
+      email: "tenant@gmail.com",
       tenants: [],
       applicationStatus: "approved",
       approvedBy: "IKLb6fxmIBBS21mRPCtu",
@@ -241,23 +236,25 @@ export class AuthService {
       .catch((err) => console.log(err));
   }
 
-  // setMeterData() {
-  //   const meterRef: AngularFirestoreDocument<any> =
-  //     this.afs.doc(`meters/meterid3`);
-  //   const meterData: Meter = {
-  //     mid: "meterid2",
-  //     type: "1",
-  //     status: "2",
-  //     location: "jamuna",
-  //     bill: "2323",
-  //     owner: "IKLb6fxmIBBS21mRPCtu",
-  //   };
-  //   return meterRef
-  //     .set(meterData, {
-  //       merge: true,
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
+  setMeterData(id, owner, location) {
+    const meterRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `meters/meterid${id}`
+    );
+    const meterData: Meter = {
+      mid: `meterid${id}`,
+      type: "2",
+      status: "2",
+      location: `${location}`,
+      bill: "233",
+      owner: `${owner}`,
+      billStatus: "pending",
+    };
+    return meterRef
+      .set(meterData, {
+        merge: true,
+      })
+      .catch((err) => console.log(err));
+  }
 }
 
 export interface User {
@@ -283,4 +280,5 @@ export interface Meter {
   location: string;
   bill: string;
   owner: string;
+  billStatus: string;
 }

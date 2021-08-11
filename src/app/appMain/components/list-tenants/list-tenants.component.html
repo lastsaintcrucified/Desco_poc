@@ -8,6 +8,40 @@
         Back
       </button>
     </div>
+    <div class="col-12 m-t-10 m-l-20">
+      <div class="input-group">
+        <div class="form-outline">
+          <input
+            type="search"
+            [(ngModel)]="searchArea"
+            id="form1"
+            class="form-control"
+            placeholder="Area"
+            (ngModelChange)="onSearchChangeArea($event)"
+          />
+        </div>
+        <button type="button" class="btn btn-primary">
+          <i class="ti-search"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-12 m-t-10 m-l-20">
+      <div class="input-group">
+        <div class="form-outline">
+          <input
+            type="search"
+            [(ngModel)]="searchUser"
+            id="form2"
+            class="form-control"
+            placeholder="User id"
+            (ngModelChange)="onSearchChangeUser($event)"
+          />
+        </div>
+        <button type="button" class="btn btn-primary">
+          <i class="ti-search"></i>
+        </button>
+      </div>
+    </div>
   </div>
   <!-- Column -->
   <div
@@ -31,7 +65,7 @@
                 <th>Name</th>
                 <th>App status</th>
                 <th>Approved by</th>
-                <th>Aproved on</th>
+                <th>Location</th>
                 <th>No of meters</th>
                 <th>No of tenants</th>
                 <th>Actions</th>
@@ -51,7 +85,7 @@
                 <td>{{ user.displayName }}</td>
                 <td>{{ user.applicationStatus }}</td>
                 <td>{{ user.approvedBy }}</td>
-                <td>{{ user.approvedOn }}</td>
+                <td>{{ user.address }}</td>
                 <td>{{ user.meters.length }}</td>
                 <td>
                   {{ user.tenants.length }}
@@ -65,7 +99,8 @@
                     data-toggle="tooltip"
                     title="Edit"
                   >
-                    <i class="ti-close"></i><span>Deactivate</span>
+                    <i class="ti-close sp"></i
+                    ><span class="sp">Deactivate</span>
                   </a>
                   <a
                     *ngIf="user.applicationStatus == 'pending'"

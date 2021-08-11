@@ -40,6 +40,7 @@ import { SignInComponent } from "./appMain/components/sign-in/sign-in.component"
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from "@angular/fire/storage";
 import { environment } from "../environments/environment";
 import * as firebase from "firebase";
 import { SignUpComponent } from "./appMain/components/sign-up/sign-up.component";
@@ -52,6 +53,7 @@ import { ListAdminComponent } from "./appMain/components/list-admin/list-admin.c
 import { ListUsersComponent } from "./appMain/components/list-users/list-users.component";
 import { ListLandlordsComponent } from "./appMain/components/list-landlords/list-landlords.component";
 import { ListTenantsComponent } from "./appMain/components/list-tenants/list-tenants.component";
+import { BillPayComponent } from "./appMain/components/bill-pay/bill-pay.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -86,11 +88,13 @@ firebase.default.initializeApp(environment.firebase);
     ListUsersComponent,
     ListLandlordsComponent,
     ListTenantsComponent,
+    BillPayComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,

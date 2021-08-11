@@ -8,6 +8,10 @@ import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./list-item.component.scss"],
 })
 export class ListItemComponent implements OnInit {
+  temp: any = [];
+  searchArea: string;
+  searchMeter: string;
+  userStatus: string;
   meterIds: any;
   meter: any;
   meters: any = [];
@@ -48,22 +52,35 @@ export class ListItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.meterIds = this.storage.get("user").meters;
-    console.log("meterIds->", this.meterIds);
-    this.meterIds.map((mid) => {
-      this.authService.getMeterDoc(mid).subscribe((itm) => {
-        if (itm) {
-          let itemIndex = this.meters.findIndex((item) => item.mid == itm.mid);
-          itemIndex >= 0 ? (this.meters[itemIndex] = itm) : null;
-          console.log(itemIndex);
+    this.userStatus = this.storage.get("user").status;
+    // console.log("userStatus->",this.userStatus);
 
-          if (itemIndex < 0) {
-            this.meters.push(itm);
-          }
-        }
+    if (this.userStatus == "super_admin" || this.userStatus == "admin") {
+      this.authService.getCollection("meters").subscribe((itm) => {
+        this.meters = [...itm];
+        this.temp = [...this.meters];
       });
-    });
-    this.meters = [...this.meters];
+    } else {
+      this.meterIds = this.storage.get("user").meters;
+      console.log("meterIds->", this.meterIds);
+      this.meterIds.map((mid) => {
+        this.authService.getMeterDoc(mid).subscribe((itm) => {
+          if (itm) {
+            let itemIndex = this.meters.findIndex(
+              (item) => item.mid == itm.mid
+            );
+            itemIndex >= 0 ? (this.meters[itemIndex] = itm) : null;
+            // console.log(itemIndex);
+
+            if (itemIndex < 0) {
+              this.meters.push(itm);
+              this.temp = [...this.meters];
+            }
+          }
+        });
+      });
+      this.meters = [...this.meters];
+    }
   }
 
   onStatusToggle(id, num) {
@@ -72,6 +89,42 @@ export class ListItemComponent implements OnInit {
     };
     this.authService.setData(id, data, "meters");
   }
+
+  onSearchChangeArea(e) {
+    if (e.length > 0) {
+      this.authService
+        .getCollectionSpecific("meters", "location", e)
+        .subscribe((itm) => {
+          // console.log(itm);
+
+          itm.length > 0 ? (this.meters = [...itm]) : null;
+        });
+    } else {
+      this.meters = [...this.temp];
+    }
+  }
+  onSearchChangeMeter(e) {
+    if (e.length > 0) {
+      this.authService
+        .getCollectionSpecific("meters", "mid", e)
+        .subscribe((itm) => {
+          // console.log(itm);
+
+          itm.length > 0 ? (this.meters = [...itm]) : null;
+        });
+    } else {
+      this.meters = [...this.temp];
+    }
+  }
+  // onAreaSearch() {
+  //   this.authService
+  //     .getCollectionSpecific("meters", "location", this.searchArea)
+  //     .subscribe((itm) => {
+  //       // console.log(itm);
+
+  //       itm.length > 0 ? (this.meters = [...itm]) : null;
+  //     });
+  // }
   private getDismissReason(reason: ModalDismissReasons): string {
     if (reason === ModalDismissReasons.ESC) {
       return "by pressing ESC";

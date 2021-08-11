@@ -11,6 +11,7 @@ import { ListLandlordsComponent } from "./appMain/components/list-landlords/list
 import { ListTenantsComponent } from "./appMain/components/list-tenants/list-tenants.component";
 import { ListSuperAdminComponent } from "./appMain/components/list-super-admin/list-super-admin.component";
 import { ListAdminComponent } from "./appMain/components/list-admin/list-admin.component";
+import { BillPayComponent } from "./appMain/components/bill-pay/bill-pay.component";
 
 import { AuthGuard } from "./appMain/components/guard/auth.guard";
 export const Approutes: Routes = [
@@ -25,6 +26,7 @@ export const Approutes: Routes = [
   { path: "list-tenants", component: ListTenantsComponent },
   { path: "list-super-admin", component: ListSuperAdminComponent },
   { path: "list-admin", component: ListAdminComponent },
+  { path: "bill-pay", component: BillPayComponent },
   {
     path: "**",
     redirectTo: "/authentication/404",

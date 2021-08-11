@@ -92,6 +92,9 @@
             <button class="btn btn-sm btn-info" routerLink="/update-profile">
               update profile
             </button>
+            <button class="btn btn-sm btn-info" routerLink="/bill-pay">
+              pay bill
+            </button>
           </div>
         </div>
       </div>
@@ -100,7 +103,7 @@
   <!-- Column -->
   <!-- Column -->
   <div class="col-lg-8 col-xlg-9 col-md-7">
-    <app-manage-things></app-manage-things>
+    <app-manage-things [user]="user"></app-manage-things>
   </div>
   <!-- Column -->
 </div>

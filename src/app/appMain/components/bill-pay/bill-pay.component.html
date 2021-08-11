@@ -1,0 +1,156 @@
+<div class="row">
+  <div class="col-12 m-t-10 m-l-20">
+    <button
+      class="btn btn-sm btn-outline-primary float-left"
+      routerLink="/user-dashboard"
+    >
+      Back
+    </button>
+  </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">BILL SUMMARY</h5>
+        <div class="table-responsive">
+          <table class="table v-middle table-hover">
+            <thead class="bg-primary text-white">
+              <tr>
+                <th>Meter Id</th>
+                <th>Owner</th>
+                <th>Bill</th>
+                <th>Bill Status</th>
+              </tr>
+            </thead>
+            <tbody class="border border-primary">
+              <tr *ngFor="let meter of meters; trackBy: trackByFn">
+                <td>
+                  {{ meter.mid }}
+                </td>
+                <td>{{ meter.owner }}</td>
+                <td>{{ meter.bill }}</td>
+                <td>{{ meter.billStatus }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr />
+        <h5 class="card-title">Choose payment Option</h5>
+        <!-- <ngb-tabset>
+                  <ngb-tab>
+                    <ng-template ngbTabTitle>
+                        <span class="visible-xs">
+                            <i class="ti-home"></i>
+                        </span>
+                        <span class="hidden-xs"> Debit Card</span>       
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                      
+                    </ng-template>
+                  </ngb-tab>
+                  <ngb-tab>
+                    <ng-template ngbTabTitle>
+                        <span class="visible-xs">
+                            <i class="ti-user"></i>
+                        </span>
+                        <span class="hidden-xs">Paypal</span>
+                    </ng-template>
+                  </ngb-tab>
+                 </ngb-tabset> -->
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>
+              <span class="visible-xs">
+                <i class="ti-home"></i>
+              </span>
+              <span class="hidden-xs"> Nagad</span>
+            </a>
+            <ng-template ngbNavContent>
+              <div class="row">
+                <div class="col-md-7">
+                  <form>
+                    <div class="row">
+                      <div class="col-xs-7 col-md-7">
+                        <div class="form-group">
+                          <label>Meter Id</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="meterId"
+                            [(ngModel)]="meterId"
+                            placeholder="1111-2222-3333-4444"
+                            required=""
+                          />
+                        </div>
+                      </div>
+                      <div class="col-xs-5 col-md-5 pull-right">
+                        <div class="form-group">
+                          <label>Owner Id</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="ownerId"
+                            [(ngModel)]="ownerId"
+                            placeholder="1111-2222-3333-4444"
+                            required=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Bill to be paid</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            [(ngModel)]="bill"
+                            name="bill"
+                            placeholder="Bill"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <button (click)="onPayment()" class="btn btn-info">
+                      Make Payment
+                    </button>
+                  </form>
+                </div>
+                <div class="col-md-4 ml-auto">
+                  <h4 class="card-title m-t-30">General Info</h4>
+
+                  <p>
+                    You can pay your bill through the payment gateway against
+                    your meter id. You can pay one bill for one meter every
+                    time.Multiple bill can be paid one by one.
+                  </p>
+                  <p>
+                    Be very cautious while entering the meter number and owner
+                    id number
+                  </p>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>
+              <span class="visible-xs">
+                <i class="ti-user"></i>
+              </span>
+              <span class="hidden-xs">Procedeur</span>
+            </a>
+            <ng-template ngbNavContent>
+              <p>
+                First, copy the meter id from the table that you want to pay the
+                bill of.Then paste the meter id in the "Meter id" field. Do same
+                for the owner id field. You have to be very carefull while
+                entering the ids.
+              </p>
+            </ng-template>
+          </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+      </div>
+    </div>
+  </div>
+</div>

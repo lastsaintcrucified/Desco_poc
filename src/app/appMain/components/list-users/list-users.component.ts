@@ -10,6 +10,9 @@ import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./list-users.component.scss"],
 })
 export class ListUsersComponent implements OnInit {
+  temp: any = [];
+  searchArea: string;
+  searchUser: string;
   user: any;
   users: any = [];
   page = 1;
@@ -52,6 +55,7 @@ export class ListUsersComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getCollection("users").subscribe((itm) => {
       this.users = [...itm];
+      this.temp = [...this.users];
     });
     console.log(this.users);
   }
@@ -60,6 +64,32 @@ export class ListUsersComponent implements OnInit {
       applicationStatus: `${status}`,
     };
     this.authService.setData(id, data, "users");
+  }
+  onSearchChangeArea(e) {
+    if (e.length > 0) {
+      this.authService
+        .getCollectionSpecific("users", "address", e)
+        .subscribe((itm) => {
+          // console.log(itm);
+
+          itm.length > 0 ? (this.users = [...itm]) : null;
+        });
+    } else {
+      this.users = [...this.temp];
+    }
+  }
+  onSearchChangeUser(e) {
+    if (e.length > 0) {
+      this.authService
+        .getCollectionSpecific("users", "uid", e)
+        .subscribe((itm) => {
+          // console.log(itm);
+
+          itm.length > 0 ? (this.users = [...itm]) : null;
+        });
+    } else {
+      this.users = [...this.temp];
+    }
   }
   private getDismissReason(reason: ModalDismissReasons): string {
     if (reason === ModalDismissReasons.ESC) {
