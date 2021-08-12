@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 export class SignInComponent implements OnInit {
   mobile: string;
   windowRef: any;
-
+  disabled: boolean = true;
   verificationCode: string;
 
   user: any;
@@ -24,29 +24,34 @@ export class SignInComponent implements OnInit {
   recoverform = false;
 
   ngOnInit() {
-    this.windowRef = this.win.windowRef;
-    this.windowRef.recaptchaVerifier =
-      new firebase.default.auth.RecaptchaVerifier("recaptcha-container");
+    setTimeout(() => {
+      this.windowRef = this.win.windowRef;
+      this.windowRef.recaptchaVerifier =
+        new firebase.default.auth.RecaptchaVerifier("recaptcha-container");
 
-    this.windowRef.recaptchaVerifier.render();
+      this.windowRef.recaptchaVerifier.render();
+    }, 500);
   }
   sendLoginCode() {
     const appVerifier = this.windowRef.recaptchaVerifier;
 
-    // const num = `+88001${this.mobile}`;
-    const num = `${this.mobile}`;
+    const num = `+88001${this.mobile}`;
+    // const num = `${this.mobile}`;
 
     firebase.default
       .auth()
       .signInWithPhoneNumber(num, appVerifier)
       .then((result) => {
         this.windowRef.confirmationResult = result;
+        if (result) {
+          this.disabled = false;
+        }
       })
       .catch((error) => console.log(error));
   }
 
   submit() {
-    this.authService.SignIn(
+    return this.authService.SignIn(
       this.windowRef,
       this.verificationCode,
       "/user-dashboard"

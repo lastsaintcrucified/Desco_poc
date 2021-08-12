@@ -1,6 +1,5 @@
 <div class="row">
   <div class="col-lg-12">
-    
     <div class="card">
       <div class="card-header bg-info">
         <h4 class="m-b-0 text-white">Profile update</h4>
@@ -18,7 +17,9 @@
                     name="firstName"
                     [(ngModel)]="firstName"
                     class="form-control"
-                    placeholder="John doe"
+                    placeholder="{{
+                      pName ? pName.split(' ')[0] : 'First Name'
+                    }}"
                   />
                 </div>
               </div>
@@ -32,7 +33,9 @@
                     name="lastName"
                     [(ngModel)]="lastName"
                     class="form-control form-control-danger"
-                    placeholder="12n"
+                    placeholder="{{
+                      pName ? pName.split(' ')[1] : 'Last Name'
+                    }}"
                   />
                 </div>
               </div>
@@ -49,7 +52,7 @@
                     [(ngModel)]="blood"
                     name="blood"
                     class="form-control form-control-danger"
-                    placeholder="12n"
+                    placeholder="{{ pblood ? pblood : 'Blood Group' }}"
                   />
                 </div>
               </div>
@@ -62,6 +65,7 @@
                     [(ngModel)]="dob"
                     name="dob"
                     class="form-control"
+                    placeholder="{{ pDob ? pDob : 'mm/dd/yyy' }}"
                   />
                 </div>
               </div>
@@ -78,7 +82,7 @@
                     [(ngModel)]="nid"
                     name="nid"
                     class="form-control form-control-danger"
-                    placeholder="nid number "
+                    placeholder="{{ pNid ? pNid : 'Nid' }}"
                   />
                 </div>
               </div>
@@ -90,7 +94,7 @@
                   [(ngModel)]="email"
                   name="email"
                   class="form-control form-control-danger"
-                  placeholder="email "
+                  placeholder="{{ pEmail ? pEmail : 'Email' }}"
                 />
               </div>
               <!--/span-->
@@ -106,13 +110,14 @@
                       <input
                         type="file"
                         name="photo"
-                        (change)="getPhotoUrl($event)"
+                        (change)="handleInputChange($event)"
                         class="custom-file-input"
                         id="inputGroupFile01"
+                        accept="*.png.jpg.jpeg"
                       />
-                      <label class="custom-file-label" for="inputGroupFile01"
-                        >Choose file</label
-                      >
+                      <label class="custom-file-label" for="inputGroupFile01">{{
+                        photoName ? photoName : "Choose Image"
+                      }}</label>
                     </div>
                   </div>
                 </div>
@@ -133,6 +138,7 @@
                     name="addP1"
                     [(ngModel)]="addP1"
                     class="form-control"
+                    placeholder="{{ pStreet ? pStreet : 'Street' }}"
                   />
                 </div>
               </div>
@@ -146,6 +152,7 @@
                     name="addP2"
                     [(ngModel)]="addP2"
                     class="form-control"
+                    placeholder="{{ pCity ? pCity : 'City' }}"
                   />
                 </div>
               </div>
@@ -158,6 +165,7 @@
                     name="addP3"
                     [(ngModel)]="addP3"
                     class="form-control"
+                    placeholder="{{ pState ? pState : 'State' }}"
                   />
                 </div>
               </div>
@@ -173,6 +181,7 @@
                     name="addP4"
                     [(ngModel)]="addP4"
                     class="form-control"
+                    placeholder="{{ pPost ? pPost : 'Post Code' }}"
                   />
                 </div>
               </div>

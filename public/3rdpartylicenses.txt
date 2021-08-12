@@ -546,6 +546,8 @@ firebase/auth
 
 firebase/firestore
 
+firebase/storage
+
 flatpickr
 MIT
 The MIT License (MIT)

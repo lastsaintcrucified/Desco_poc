@@ -1,25 +1,16 @@
 <div class="row">
   <!-- Column -->
   <div class="col-lg-4 col-xlg-3 col-md-5">
-    <div class="row">
-      <div class="col-12 m-t-10 m-l-10">
-        <button
-          class="btn btn-sm btn-outline-danger float-left"
-          (click)="signOut()"
-        >
-          Sign Out
-        </button>
-      </div>
-    </div>
     <div class="card">
       <div class="card-body">
-        <div class="m-t-30 text-center">
+        <div class="text-center">
           <img
-            src="assets/images/users/5.jpg"
+            src="{{ photoUrl }}"
             class="rounded-circle"
             width="150"
+            height="150"
           />
-          <h4 class="card-title m-t-10">{{ displayName }}</h4>
+          <h4 class="card-title">{{ displayName }}</h4>
           <h6 class="card-subtitle">{{ displayName }}</h6>
           <div class="row text-center justify-content-md-center">
             <div class="col-4">
@@ -40,53 +31,67 @@
       <div>
         <hr />
       </div>
-      <div class="card-body">
-        <small class="d-flex justify-content-center"
-          ><strong>Name</strong> :{{ displayName }}
-        </small>
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>User type</strong>:{{ status }}
-        </small>
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>User Id</strong> :{{ uid }}
-        </small>
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>Tenants:</strong> {{ tenants }}</small
-        >
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>Meters</strong>:{{ meters }}
-        </small>
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>Approved by</strong>: {{ apprvBy }}
-        </small>
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>Application status</strong>: {{ appStat }}
-        </small>
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>Blood group</strong>: {{ blood }}</small
-        >
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>NID</strong>: {{ nid }}</small
-        >
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>Date of birth</strong>: {{ dob }}</small
-        >
-        <h6></h6>
-        <small class="d-flex justify-content-center"
-          ><strong>Address</strong> {{ address }}</small
-        >
-        <h6></h6>
+      <div class="card-body dash">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>Personal Info</a>
+            <ng-template ngbNavContent>
+              <small class="d-flex"
+                ><strong>Name</strong> :{{ displayName }}
+              </small>
+              <h6></h6>
+              <small class="d-flex"
+                ><strong>Date of birth</strong>: {{ dob }}</small
+              >
+              <h6></h6>
+              <small class="d-flex"
+                ><strong>Address</strong> {{ address }}</small
+              >
+              <h6></h6>
+              <small class="d-flex"
+                ><strong>Blood group</strong>: {{ blood }}</small
+              >
+              <h6></h6>
+              <small class="d-flex"
+                ><strong>Mobile number</strong>: {{ mobile }}</small
+              >
+              <h6></h6>
 
-        <br />
+              <small class="d-flex"><strong>NID</strong>: {{ nid }}</small>
+              <h6></h6>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>Meter Info</a>
+            <ng-template ngbNavContent>
+              <small class="d-flex"
+                ><strong>User type</strong>:{{ status }}
+              </small>
+              <h6></h6>
+              <small class="d-flex"><strong>User Id</strong> :{{ uid }} </small>
+              <h6></h6>
+              <small class="d-flex"
+                ><strong>Number of Meters</strong>:{{ meters }}
+              </small>
+              <h6></h6>
+              <small class="d-flex"
+                ><strong>Approved by</strong>: {{ apprvBy }}
+              </small>
+              <h6></h6>
+              <small class="d-flex"
+                ><strong>Application status</strong>: {{ appStat }}
+              </small>
+              <h6></h6>
+
+              <small class="d-flex"
+                ><strong>Tenants:</strong> {{ tenants }}</small
+              >
+              <h6></h6>
+            </ng-template>
+          </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
         <div class="row">
           <div class="col-12 m-t-10 m-l-10 d-flex justify-content-center">
             <button class="btn btn-sm btn-info" routerLink="/update-profile">
@@ -107,3 +112,5 @@
   </div>
   <!-- Column -->
 </div>
+
+<div class="card"></div>

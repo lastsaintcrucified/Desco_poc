@@ -17,4 +17,7 @@ export class ManageThingsComponent implements OnInit {
   // addMtr() {
   //   this.authService.setMeterData();
   // }
+  signOut() {
+    this.authService.SignOut();
+  }
 }

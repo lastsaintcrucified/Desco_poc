@@ -12,8 +12,10 @@ import * as firebase from "firebase";
   providedIn: "root",
 })
 export class AuthService {
+  tempUserData: any;
   userData: any; // Save logged in user data
-
+  unSubscribe: any;
+  mobileNum: string;
   constructor(
     public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
@@ -24,10 +26,9 @@ export class AuthService {
       if (user) {
         this.userData = user;
         this.getUser(user.uid);
+      } else {
+        this.storage.set("user", null);
       }
-      // else {
-      //   this.storage.set("user", null);
-      // }
     });
   }
 
@@ -40,7 +41,7 @@ export class AuthService {
         const user = { ...result.user };
         user.displayName = name;
         user.photoURL = photo;
-        this.SetUserDataForSignUp(user);
+        // this.SetUserDataForSignUp(user);
       },
       (error) => {
         alert(error.message);
@@ -57,18 +58,28 @@ export class AuthService {
       .signInWithCredential(credential)
       .then(
         (result) => {
-          this.SetUserDataForSignUp(result.user);
-          this.userData = result.user;
+          const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+            `users/${result.user.uid}`
+          );
+          this.storage.set("mobile", result.user.phoneNumber);
+          this.unSubscribe = userRef.valueChanges().subscribe((user) => {
+            this.tempUserData = user;
+            // console.log(this.tempUserData);
+          });
+          // this.SetUserDataForSignUp(result.user);
+          // this.userData = result.user;
         },
         (error) => {
           alert(error.message);
         }
       );
-    if (this.userData) {
-      this.storage.set("user", this.userData);
-      this.router.navigate([url]);
+    if (this.tempUserData) {
+      console.log(this.tempUserData);
+      alert("User already exist!Please sign in!");
+      return this.router.navigate(["/sign-in"]);
     } else {
-      this.storage.set("user", null);
+      this.SetUserDataForSignUp(this.userData);
+      this.router.navigate([url]);
     }
   }
   SignIn(windowRef: any, verificationCode: string, url: string) {
@@ -101,10 +112,13 @@ export class AuthService {
 
   // Sign out
   SignOut() {
-    return this.afAuth.signOut().then(() => {
-      this.storage.clear();
-      this.router.navigate([""]);
-    });
+    this.storage.clear();
+    this.router.navigate([""]);
+    this.userData = null;
+    this.tempUserData = null;
+    // return this.afAuth.signOut().then(() => {
+
+    // });
   }
 
   //GET DATA
@@ -147,6 +161,7 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
+    const mobileNum = this.storage.get("mobile");
 
     const userData: User = {
       uid: user.uid,
@@ -163,6 +178,7 @@ export class AuthService {
       status: "super_admin",
       email: "",
       applicationStatus: "approved",
+      mobile: mobileNum,
     };
     return userRef.set(userData, {
       merge: true,
@@ -178,6 +194,7 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${loggedInUser.uid}`
     );
+    const mobileNum = this.storage.get("mobile");
     const userData: User = {
       uid: loggedInUser.uid,
       displayName: updatedData.displayName,
@@ -193,6 +210,7 @@ export class AuthService {
       status: "super_admin",
       email: updatedData.email,
       applicationStatus: "approved",
+      mobile: mobileNum,
     };
     return userRef
       .set(userData, {
@@ -207,6 +225,7 @@ export class AuthService {
 
   get isLoggedIn(): boolean {
     const user = this.storage.get("user");
+    console.log(user);
     return user !== null && user.uid ? true : false;
   }
 
@@ -228,6 +247,7 @@ export class AuthService {
       applicationStatus: "approved",
       approvedBy: "IKLb6fxmIBBS21mRPCtu",
       approvedOn: "12-23-23",
+      mobile: "+88003434324324",
     };
     return userRef
       .set(userData, {
@@ -272,6 +292,7 @@ export interface User {
   applicationStatus: string;
   approvedBy: string;
   approvedOn: string;
+  mobile: string;
 }
 export interface Meter {
   mid: string;

@@ -8,8 +8,10 @@ import { StorageService } from "../../services/storage.service";
 })
 export class UserDashboardComponent implements OnInit {
   user = this.storage.get("user");
+  photoUrl: string = this.user.photoUrl;
   uid: string = this.user.uid;
   displayName: string = this.user.displayName;
+  mobile: string = this.user.mobile;
   blood: string = this.user.blood;
   nid: string = this.user.nid;
   address: string = this.user.address;
@@ -26,8 +28,7 @@ export class UserDashboardComponent implements OnInit {
     public authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
-  signOut() {
-    this.authService.SignOut();
+  ngOnInit(): void {
+    console.log(this.user);
   }
 }
