@@ -4,3 +4,11 @@ a:hover {
 .sp {
   color: red;
 }
+.table-responsive {
+  overflow-x: scroll;
+}
+.search {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}

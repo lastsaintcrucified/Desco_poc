@@ -1,14 +1,15 @@
 <div class="row">
-  <div class="row">
-    <div class="col-12 m-t-10 m-l-20">
-      <button
-        class="btn btn-sm btn-outline-primary float-left"
-        routerLink="/user-dashboard"
-      >
-        Back
-      </button>
-    </div>
-    <div class="col-12 m-t-10 m-l-20">
+  <div class="col-12 m-t-10 m-l-20">
+    <button
+      class="btn btn-sm btn-outline-primary float-left"
+      routerLink="/user-dashboard"
+    >
+      Back
+    </button>
+  </div>
+
+  <div class="row m-l-20">
+    <div class="col--lg-6 col-md-6 col-sm-12 m-t-10">
       <div class="input-group">
         <div class="form-outline">
           <input
@@ -25,7 +26,7 @@
         </button>
       </div>
     </div>
-    <div class="col-12 m-t-10 m-l-20">
+    <div class="col--lg-6 col-md-6 col-sm-12 m-t-10">
       <div class="input-group">
         <div class="form-outline">
           <input
@@ -54,25 +55,24 @@
     <div class="card">
       <div class="card-body">
         <div class="table-responsive">
-          <table
-            class="table v-middle product-overview table-hover"
-            id="zero_config"
-          >
+          <table class="table table-hover" id="zero_config">
             <thead class="bg-primary text-white">
               <tr>
                 <th>Status</th>
                 <th>User id</th>
                 <th>Name</th>
                 <th>App status</th>
-                <th>Approved by</th>
                 <th>Location</th>
+                <!-- <th>Approved by</th>
+                
                 <th>No of meters</th>
-                <th>No of tenants</th>
+                <th>No of tenants</th> -->
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody class="border border-primary">
               <tr
+                title="double click to see details"
                 *ngFor="
                   let user of users
                     | slice: (page - 1) * pageSize:page * pageSize
@@ -84,12 +84,13 @@
 
                 <td>{{ user.displayName }}</td>
                 <td>{{ user.applicationStatus }}</td>
-                <td>{{ user.approvedBy }}</td>
-                <td>{{ user.address }}</td>
+                <td>{{ user.address ? user.address.split(",")[0] : "" }}</td>
+                <!-- <td>{{ user.approvedBy }}</td>
+                
                 <td>{{ user.meters.length }}</td>
                 <td>
                   {{ user.tenants.length }}
-                </td>
+                </td> -->
 
                 <td>
                   <a
@@ -163,6 +164,10 @@
         <li class="list-group-item">
           Approved on:
           <strong class="font-weight-bold">{{ mApprovedOn }}</strong>
+        </li>
+        <li class="list-group-item">
+          Approved by:
+          <strong class="font-weight-bold">{{ mApprovedBy }}</strong>
         </li>
         <li class="list-group-item">
           Meters: <strong class="font-weight-bold"> {{ mMetersNumber }}</strong>

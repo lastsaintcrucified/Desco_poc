@@ -1,14 +1,15 @@
 <div class="row">
-  <div class="row">
-    <div class="col-12 m-t-10 m-l-20">
-      <button
-        class="btn btn-sm btn-outline-primary float-left"
-        routerLink="/user-dashboard"
-      >
-        Back
-      </button>
-    </div>
-    <div class="col-12 m-t-10 m-l-20">
+  <div class="col-12 m-t-10 m-l-20">
+    <button
+      class="btn btn-sm btn-outline-primary float-left"
+      routerLink="/user-dashboard"
+    >
+      Back
+    </button>
+  </div>
+
+  <div class="row m-l-20">
+    <div class="col--lg-6 col-md-6 col-sm-12 m-t-10">
       <div class="input-group">
         <div class="form-outline">
           <input
@@ -25,7 +26,7 @@
         </button>
       </div>
     </div>
-    <div class="col-12 m-t-10 m-l-20">
+    <div class="col--lg-6 col-md-6 col-sm-12 m-t-10">
       <div class="input-group">
         <div class="form-outline">
           <input
@@ -73,6 +74,7 @@
             </thead>
             <tbody class="border border-primary">
               <tr
+              title="double click to see details"
                 *ngFor="
                   let meter of meters;
                   trackBy: trackByFn

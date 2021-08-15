@@ -28,7 +28,7 @@ export class UpdateProfileComponent implements OnInit {
   pDob: string = this.user.dob ? this.user.dob : null;
   pEmail: string = this.user.email ? this.user.email : null;
   pBlood: string = this.user.blood ? this.user.blood : null;
-  addressArray: any = this.pAddress ? this.pAddress.split("*") : [];
+  addressArray: any = this.pAddress ? this.pAddress.split(",") : [];
   pStreet: string = this.pAddress ? this.addressArray[0] : null;
   pCity: string = this.pAddress ? this.addressArray[1] : null;
   pState: string = this.pAddress ? this.addressArray[2] : null;
@@ -72,7 +72,7 @@ export class UpdateProfileComponent implements OnInit {
       this.photoUrl
     ) {
       const address = [this.addP1, this.addP2, this.addP3, this.addP4].join(
-        "*"
+        ","
       );
       console.log(this.photoUrl);
       const dsiplayName = [this.firstName, this.lastName].join(" ");

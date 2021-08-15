@@ -27,6 +27,11 @@ export class ListTenantsComponent implements OnInit {
   mMetersNumber: string;
   mTenantsNumber: string;
   open2(content2: string, user: any) {
+    user.approvedBy
+      ? this.authService
+          .getApprv(user.approvedBy)
+          .subscribe((itm) => (this.mApprovedBy = itm.displayName))
+      : (this.mApprovedBy = "");
     this.mUid = user.uid;
     this.mStatus = user.status;
     this.mDisplayname = user.displayName;
@@ -72,7 +77,9 @@ export class ListTenantsComponent implements OnInit {
         .subscribe((itm) => {
           // console.log(itm);
 
-          itm.length > 0 ? (this.users = [...itm]) : null;
+          itm.length > 0
+            ? (this.users = [...itm.filter((item) => item.status == "tenant")])
+            : null;
         });
     } else {
       this.users = [...this.temp];
@@ -85,7 +92,9 @@ export class ListTenantsComponent implements OnInit {
         .subscribe((itm) => {
           // console.log(itm);
 
-          itm.length > 0 ? (this.users = [...itm]) : null;
+          itm.length > 0
+            ? (this.users = [...itm.filter((item) => item.status == "tenant")])
+            : null;
         });
     } else {
       this.users = [...this.temp];

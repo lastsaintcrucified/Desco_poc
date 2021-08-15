@@ -16,7 +16,7 @@ export class ListItemComponent implements OnInit {
   meter: any;
   meters: any = [];
   page = 1;
-  pageSize = 5;
+  pageSize = 20;
   collectionSize: any;
   closeResult = "";
   mMid: string;
@@ -27,9 +27,14 @@ export class ListItemComponent implements OnInit {
   mType: string;
   mBillStatus: string;
   open2(content2: string, meter: any) {
+    meter.owner
+      ? this.authService
+          .getApprv(meter.owner)
+          .subscribe((itm) => (this.mOwner = itm.displayName))
+      : (this.mOwner = meter.owner);
     this.mMid = meter.mid;
     this.mStatus = meter.status;
-    this.mOwner = meter.owner;
+
     this.mBill = meter.bill;
     this.mLocation = meter.location;
     this.mType = meter.type;

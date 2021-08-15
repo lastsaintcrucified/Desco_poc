@@ -16,7 +16,7 @@ export class ListUsersComponent implements OnInit {
   user: any;
   users: any = [];
   page = 1;
-  pageSize = 5;
+  pageSize = 20;
   collectionSize: any;
   closeResult = "";
   mUid: string;
@@ -33,6 +33,11 @@ export class ListUsersComponent implements OnInit {
     private modalService: NgbModal
   ) {}
   open2(content2: string, user: any) {
+    user.approvedBy
+      ? this.authService
+          .getApprv(user.approvedBy)
+          .subscribe((itm) => (this.mApprovedBy = itm.displayName))
+      : (this.mApprovedBy = "");
     this.mUid = user.uid;
     this.mStatus = user.status;
     this.mDisplayname = user.displayName;

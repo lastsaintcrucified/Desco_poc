@@ -148,7 +148,10 @@ export class AuthService {
       .valueChanges()
       .subscribe((user) => this.storage.set("user", user));
   }
-
+  getApprv(uid) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
+    return userRef.valueChanges();
+  }
   //UPDATE and SET DATA
   updateLocalStorageData(uid) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
